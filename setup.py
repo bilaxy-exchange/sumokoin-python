@@ -24,13 +24,13 @@ def find_version(*parts):
     raise RuntimeError("Unable to find version string.")
 
 
-version = find_version('monero', '__init__.py')
+version = find_version('sumokoin', '__init__.py')
 
 setup(
-    name = 'monero',
+    name = 'sumokoin',
     version = version,
-    description = 'A comprehensive Python module for handling Monero cryptocurrency',
-    url = 'https://github.com/monero-ecosystem/monero-python/',
+    description = 'A comprehensive Python module for handling Sumokoin cryptocurrency',
+    url = 'https://github.com/sumoprojects/sumokoin-python/',
     long_description = open('README.rst', 'rb').read().decode('utf-8'),
     install_requires = open('requirements.txt', 'r').read().splitlines(),
     tests_require=open('test_requirements.txt', 'r').read().splitlines(),
@@ -54,6 +54,6 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    keywords = 'monero cryptocurrency',
+    keywords = 'sumokoin cryptocurrency',
     test_suite='tests',
 )
