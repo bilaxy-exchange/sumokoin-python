@@ -35,10 +35,10 @@
 #   + simplified interface, changed exceptions (assertions -> explicit raise)
 #   + optimization
 
-from monero import wordlists
-from monero import ed25519
-from monero import base58
-from monero.address import address
+from sumokoin import wordlists
+from sumokoin import ed25519
+from sumokoin import base58
+from sumokoin.address import address
 from binascii import hexlify, unhexlify
 from os import urandom
 from sha3 import keccak_256
@@ -46,7 +46,7 @@ from sha3 import keccak_256
 class Seed(object):
     """Creates a seed object either from local system randomness or an imported phrase.
 
-    :rtype: :class:`Seed <monero.seed.Seed>`
+    :rtype: :class:`Seed <sumokoin.seed.Seed>`
     """
 
     def __init__(self, phrase_or_hex="", wordlist="English"):
@@ -54,7 +54,7 @@ class Seed(object):
         if it's hexadecimal or mnemonic word string. Gather the values and store them.
         If no seed is passed, automatically generate a new one from local system randomness.
 
-        :rtype: :class:`Seed <monero.seed.Seed>`
+        :rtype: :class:`Seed <sumokoin.seed.Seed>`
         """
         self.phrase = "" #13 or 25 word mnemonic word string
         self.hex = "" # hexadecimal
@@ -73,13 +73,6 @@ class Seed(object):
                     # with checksum
                     self._validate_checksum()
                 self._decode_seed()
-            elif len(seed_split) >= 12:
-                # mymonero mnemonic
-                self.phrase = phrase_or_hex
-                if len(seed_split) == 13:
-                    # with checksum
-                    self._validate_checksum()
-                self._decode_seed()
             elif len(seed_split) == 1:
                 # single string, probably hex, but confirm
                 if not len(phrase_or_hex) % 8 == 0:
@@ -91,10 +84,6 @@ class Seed(object):
         else:
             self.hex = generate_hex()
             self._encode_seed()
-
-    def is_mymonero(self):
-        """Returns True if the seed is MyMonero-style (12/13-word)."""
-        return len(self.hex) == 32
 
     def _encode_seed(self):
         """Convert hexadecimal string to mnemonic word representation with checksum.
@@ -130,11 +119,11 @@ class Seed(object):
         return h.digest()
 
     def secret_spend_key(self):
-        a = self._hex_seed_keccak() if self.is_mymonero() else unhexlify(self.hex)
+        a = self._hex_seed_keccak() if self.is_mysumokoin() else unhexlify(self.hex)
         return self.sc_reduce(a)
 
     def secret_view_key(self):
-        b = self._hex_seed_keccak() if self.is_mymonero() else unhexlify(self.secret_spend_key())
+        b = self._hex_seed_keccak() if self.is_mysumokoin() else unhexlify(self.secret_spend_key())
         h = keccak_256()
         h.update(b)
         return self.sc_reduce(h.digest())
@@ -152,11 +141,11 @@ class Seed(object):
         return self._ed_pub_view_key
 
     def public_address(self, net='mainnet'):
-        """Returns the master :class:`Address <monero.address.Address>` represented by the seed.
+        """Returns the master :class:`Address <sumokoin.address.Address>` represented by the seed.
 
         :param net: the network, one of 'mainnet', 'testnet', 'stagenet'. Default is 'mainnet'.
 
-        :rtype: :class:`Address <monero.address.Address>`
+        :rtype: :class:`Address <sumokoin.address.Address>`
         """
         if net not in ('mainnet', 'testnet', 'stagenet'):
             raise ValueError(

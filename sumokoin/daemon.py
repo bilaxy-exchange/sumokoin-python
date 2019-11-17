@@ -1,5 +1,5 @@
 class Daemon(object):
-    """Monero daemon.
+    """Sumokoin daemon.
 
     Provides interface do a daemon instance.
 

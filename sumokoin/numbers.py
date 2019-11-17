@@ -1,7 +1,7 @@
 from decimal import Decimal
 import sys
 
-PICONERO = Decimal('0.000000000001')
+SUMOSHI = Decimal('0.000000001')
 EMPTY_KEY = '0' * 64
 
 if sys.version_info < (3,): # pragma: no cover
@@ -13,24 +13,24 @@ else:                       # pragma: no cover
 
 
 def to_atomic(amount):
-    """Convert Monero decimal to atomic integer of piconero."""
+    """Convert Sumokoin decimal to atomic integer of sumoshi."""
     if not isinstance(amount, (Decimal, float) + _integer_types):
         raise ValueError("Amount '{}' doesn't have numeric type. Only Decimal, int, long and "
                 "float (not recommended) are accepted as amounts.")
-    return int(amount * 10**12)
+    return int(amount * 10**9)
 
 def from_atomic(amount):
-    """Convert atomic integer of piconero to Monero decimal."""
-    return (Decimal(amount) * PICONERO).quantize(PICONERO)
+    """Convert atomic integer of sumoshi to Sumokoin decimal."""
+    return (Decimal(amount) * SUMOSHI).quantize(SUMOSHI)
 
-def as_monero(amount):
-    """Return the amount rounded to maximal Monero precision."""
-    return Decimal(amount).quantize(PICONERO)
+def as_sumokoin(amount):
+    """Return the amount rounded to maximal Sumokoin precision."""
+    return Decimal(amount).quantize(SUMOSHI)
 
 
 class PaymentID(object):
     """
-    A class that validates Monero payment ID.
+    A class that validates Sumokoin payment ID.
 
     Payment IDs can be used as str or int across the module, however this class
     offers validation as well as simple conversion and comparison to those two

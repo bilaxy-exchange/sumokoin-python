@@ -1,13 +1,13 @@
-class MoneroException(Exception):
+class SumokoinException(Exception):
     pass
 
-class BackendException(MoneroException):
+class BackendException(SumokoinException):
     pass
 
 class NoDaemonConnection(BackendException):
     pass
 
-class AccountException(MoneroException):
+class AccountException(SumokoinException):
     pass
 
 class WrongAddress(AccountException):
@@ -36,10 +36,10 @@ class TransactionBroadcastError(BackendException):
 class TransactionNotFound(AccountException):
     pass
 
-class SignatureCheckFailed(MoneroException):
+class SignatureCheckFailed(SumokoinException):
     pass
 
-class WalletIsNotDeterministic(MoneroException):
+class WalletIsNotDeterministic(SumokoinException):
     pass
 
 class GenericTransferError(AccountException):
@@ -51,5 +51,5 @@ class AccountIndexOutOfBound(AccountException):
 class AddressIndexOutOfBound(AccountException):
     pass
 
-class WalletIsWatchOnly(MoneroException):
+class WalletIsWatchOnly(SumokoinException):
     pass

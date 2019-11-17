@@ -12,11 +12,11 @@ from .transaction import Payment, PaymentManager
 
 class Wallet(object):
     """
-    Monero wallet.
+    Sumokoin wallet.
 
     Provides interface to operate on a wallet.
 
-    A wallet consists of :class:`accounts <monero.account.Account>`. Fresh wallets start
+    A wallet consists of :class:`accounts <sumokoin.account.Account>`. Fresh wallets start
     with only one account but you may create more. Although it's possible to combine funds
     from different accounts, or even wallets, in a single transaction, this code closely
     follows the idea of separation introduced in the original wallet software.
@@ -104,8 +104,8 @@ class Wallet(object):
     def confirmations(self, txn_or_pmt):
         """
         Returns the number of confirmations for given
-        :class:`Transaction <monero.transaction.Transaction>` or
-        :class:`Payment <monero.transaction.Payment>` object.
+        :class:`Transaction <sumokoin.transaction.Transaction>` or
+        :class:`Payment <sumokoin.transaction.Payment>` object.
 
         :rtype: int
         """
@@ -174,7 +174,7 @@ class Wallet(object):
         """
         Returns wallet's master address.
 
-        :rtype: :class:`Address <monero.address.Address>`
+        :rtype: :class:`Address <sumokoin.address.Address>`
         """
         return self.accounts[0].address()
 
@@ -182,8 +182,8 @@ class Wallet(object):
         """
         Returns all addresses of the default account.
 
-        :rtype: list of :class:`Address <monero.address.Address>` and
-                :class:`SubAddress <monero.address.SubAddress>`
+        :rtype: list of :class:`Address <sumokoin.address.Address>` and
+                :class:`SubAddress <sumokoin.address.SubAddress>`
         """
         return self.accounts[0].addresses()
 
@@ -192,7 +192,7 @@ class Wallet(object):
         Creates a new address in the default account.
 
         :rtype: tuple of subaddress, subaddress index (minor):
-                (:class:`SubAddress <monero.address.SubAddress>`, `int`)
+                (:class:`SubAddress <sumokoin.address.SubAddress>`, `int`)
         """
         return self.accounts[0].new_address(label=label)
 
@@ -201,7 +201,7 @@ class Wallet(object):
         Calculates sub-address for account index (`major`) and address index within
         the account (`minor`).
 
-        :rtype: :class:`BaseAddress <monero.address.BaseAddress>`
+        :rtype: :class:`BaseAddress <sumokoin.address.BaseAddress>`
         """
         # ensure indexes are within uint32
         if major < 0 or major >= 2**32:
@@ -237,19 +237,19 @@ class Wallet(object):
         """
         Sends a transfer from the default account. Returns a list of resulting transactions.
 
-        :param address: destination :class:`Address <monero.address.Address>` or subtype
+        :param address: destination :class:`Address <sumokoin.address.Address>` or subtype
         :param amount: amount to send
         :param priority: transaction priority, implies fee. The priority can be a number
                     from 1 to 4 (unimportant, normal, elevated, priority) or a constant
-                    from `monero.prio`.
+                    from `sumokoin.prio`.
         :param payment_id: ID for the payment (must be None if
-                    :class:`IntegratedAddress <monero.address.IntegratedAddress>`
+                    :class:`IntegratedAddress <sumokoin.address.IntegratedAddress>`
                     is used as the destination)
         :param unlock_time: the extra unlock delay
         :param relay: if `True`, the wallet will relay the transaction(s) to the network
                     immediately; when `False`, it will only return the transaction(s)
                     so they might be broadcast later
-        :rtype: list of :class:`Transaction <monero.transaction.Transaction>`
+        :rtype: list of :class:`Transaction <sumokoin.transaction.Transaction>`
         """
         return self.accounts[0].transfer(
                 address,
@@ -269,16 +269,16 @@ class Wallet(object):
         :param destinations: a list of destination and amount pairs: [(address, amount), ...]
         :param priority: transaction priority, implies fee. The priority can be a number
                 from 1 to 4 (unimportant, normal, elevated, priority) or a constant
-                from `monero.prio`.
+                from `sumokoin.prio`.
         :param payment_id: ID for the payment (must be None if
-                :class:`IntegratedAddress <monero.address.IntegratedAddress>`
+                :class:`IntegratedAddress <sumokoin.address.IntegratedAddress>`
                 is used as a destination)
         :param unlock_time: the extra unlock delay
         :param relay: if `True`, the wallet will relay the transaction(s) to the network
                 immediately; when `False`, it will only return the transaction(s)
                 so they might be broadcast later
         :rtype: list of transaction and amount pairs:
-                [(:class:`Transaction <monero.transaction.Transaction>`, `Decimal`), ...]
+                [(:class:`Transaction <sumokoin.transaction.Transaction>`, `Decimal`), ...]
         """
         return self.accounts[0].transfer_multiple(
                 destinations,
@@ -293,12 +293,12 @@ class Wallet(object):
         Sends all unlocked balance from the default account to an address.
         Returns a list of resulting transactions.
 
-        :param address: destination :class:`Address <monero.address.Address>` or subtype
+        :param address: destination :class:`Address <sumokoin.address.Address>` or subtype
         :param priority: transaction priority, implies fee. The priority can be a number
                     from 1 to 4 (unimportant, normal, elevated, priority) or a constant
-                    from `monero.prio`.
+                    from `sumokoin.prio`.
         :param payment_id: ID for the payment (must be None if
-                    :class:`IntegratedAddress <monero.address.IntegratedAddress>`
+                    :class:`IntegratedAddress <sumokoin.address.IntegratedAddress>`
                     is used as the destination)
         :param subaddr_indices: a sequence of subaddress indices to sweep from. Empty sequence
                     or `None` means sweep all positive balances.
@@ -306,7 +306,7 @@ class Wallet(object):
         :param relay: if `True`, the wallet will relay the transaction(s) to the network
                     immediately; when `False`, it will only return the transaction(s)
                     so they might be broadcast later
-        :rtype: list of :class:`Transaction <monero.transaction.Transaction>`
+        :rtype: list of :class:`Transaction <sumokoin.transaction.Transaction>`
         """
         return self.accounts[0].sweep_all(
             address,

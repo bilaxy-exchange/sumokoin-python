@@ -7,7 +7,7 @@ from .numbers import PaymentID
 class Payment(object):
     """
     A payment base class, representing payment not associated with any
-    :class:`Account <monero.account.Account>`.
+    :class:`Account <sumokoin.account.Account>`.
 
     This class is not intended to be turned into objects by the user,
     it is used by backends.
@@ -39,7 +39,7 @@ class Payment(object):
 class IncomingPayment(Payment):
     """
     An incoming payment (one that increases the balance of an
-    :class:`Account <monero.account.Account>`)
+    :class:`Account <sumokoin.account.Account>`)
     """
     _reprstr = "in: {} @ {} {:.12f} id={}"
 
@@ -47,7 +47,7 @@ class IncomingPayment(Payment):
 class OutgoingPayment(Payment):
     """
     An outgoing payment (one that decreases the balance of an
-    :class:`Account <monero.account.Account>`)
+    :class:`Account <sumokoin.account.Account>`)
     """
     destinations = None
 
@@ -60,7 +60,7 @@ class OutgoingPayment(Payment):
 
 class Transaction(object):
     """
-    A Monero transaction. Identified by `hash`, it can be a part of a block of some `height`
+    A Sumokoin transaction. Identified by `hash`, it can be a part of a block of some `height`
     or not yet mined (`height` is `None` then).
 
     This class is not intended to be turned into objects by the user,
@@ -96,7 +96,7 @@ else:                       # pragma: no cover
 class PaymentManager(object):
     """
     A payment query manager, handling either incoming or outgoing payments of
-    an :class:`Account <monero.account.Account>`.
+    an :class:`Account <sumokoin.account.Account>`.
 
     This class is not intended to be turned into objects by the user,
     it is used by backends.
