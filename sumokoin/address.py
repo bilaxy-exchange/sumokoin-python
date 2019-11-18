@@ -141,7 +141,7 @@ class SubAddress(BaseAddress):
     Any type of address which is not the master one for a wallet.
     """
 
-    _valid_netbytes = (2598576296, 2599056584, 2599056584)
+    _valid_netbytes = (2598576221, 2599056584, 2599056584)
     # NOTE: _valid_netbytes order is (mainnet, testnet, stagenet)
 
     def with_payment_id(self, _):
